@@ -1,4 +1,3 @@
-
 const data = [
     { id: 1, nome: "Capitu", 
         idade: 15, sexo: "F",
@@ -22,31 +21,95 @@ function listarPorId(id) {
             erro: true,
             mensagem: "Pet não encontrado!"
         };
-
-        
     }
     return pet;
 }
 
-function cadastrar(pet1) {
-   pet1.id = data.length + 1;
-    data.push(pet1);
-
+function cadastrar(pet) {
+    pet.id = data.length+1;
+    data.push(pet);
     
+
+    if(pet.nome == undefined){
+        return{
+            erro: true,
+            mensagem: "Campo 'nome' é obrigatório!"
+        };
+    }
+
+    if(pet.idade == undefined){
+        return{
+            erro: true,
+            mensagem: "Campo 'idade' é obrigatório!"
+        };
+    }
+
+    if(pet.sexo == undefined){
+        return{
+            erro: true,
+            mensagem: "Campo 'sexo' é obrigatório!"
+        };
+    }
+
+    if(pet.especie == undefined){
+        return{
+            erro: true,
+            mensagem: "Campo 'especie' é obrigatório!"
+        };
+    }
+
+    if(pet.idade <= 0){
+        return{
+            erro: true,
+            mensagem: "Campo 'idade' deve ser maior ou igual a zero!"
+        };
+    }
+    if(pet.sexo == 'M' || 'F'){
+        return{
+            erro: true,
+            mensagem: "Campo 'sexo' deve ser 'M' ou 'F'!"
+        }
+    }
     return pet;
 }
 
-function editarPorId(id, pet) {
+function editarPorId(id,pet) {
     const index = data.findIndex(pet => pet.id === id);
     if(index === -1)
-        return {erro: true, mensagem: "Pet não encontrado!"}
+        return {
+            erro: true, 
+            mensagem: "Pet não encontrado!"}
+    if(pet.idade <= 0){
+        return{
+            erro: true,
+            mensagem: "Campo 'idade' deve ser maior ou igual a zero!"
+        };
+    }
+    if(pet.sexo == 'M' || 'F'){
+        return{
+            erro: true,
+            mensagem: "Campo 'sexo' deve ser 'M' ou 'F'!"
+        }
+    }
+    return id;
 }
 
 function deletarPorId(id) {
     const index = data.findIndex(pet => pet.id === id);
-    if(index === -1) 
-    return {erro: true, mensagem: "Pet não encontrado!"}
-}
+    
+    if(index === id -1){
+        return{
+        erro: false,
+        mensagem: "Pet deletado com sucesso!"
+        };
+    }
+    
+    if(index === -1){
+        return {
+        erro: true, 
+        mensagem: "Pet não encontrado!"}
+        };
+    }
 
 module.exports = {
     listar,
